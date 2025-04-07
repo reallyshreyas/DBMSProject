@@ -1,0 +1,16 @@
+@keyframes moveText {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+header h1 {
+  margin: 0;
+  animation: moveText 2s infinite; /* Adjust the duration and style as needed */
+}

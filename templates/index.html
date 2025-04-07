@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block content %}
+<div id="search">
+  <form action="{{url_for('index')}}" method="POST">
+    From:
+    <select name="from" class="custom-dropdown">
+      <option value="vizag">Vizag</option>
+      <option value="hyderabad">Hyderabad</option>
+      <option value="chennai">Chennai</option>
+      <option value="delhi">Delhi</option>
+      <option value="kolkata">Kolkata</option>
+    </select>
+    To:
+    <select name="to" class="custom-dropdown">
+      <option value="hyderabad">Hyderabad</option>
+      <option value="vizag">Vizag</option>
+      <option value="chennai">Chennai</option>
+      <option value="delhi">Delhi</option>
+      <option value="kolkata">Kolkata</option>
+    </select>
+    <input type="submit" name="Search" />
+  </form>
+</div>
+<style>
+  .custom-dropdown {
+    font-size: 50px; /* Adjust the font size as needed */
+    padding: 30px; /* Adjust the padding as needed */
+    width: 10%;
+  }
+</style>
+{% endblock %}

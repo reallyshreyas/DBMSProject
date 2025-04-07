@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block content %}
+<div align="center">
+  <form method="POST" action="{{ url_for('submit_data') }}"> <br>
+    Name: <input name="name" id="name" value="{{ name }}" readonly/> <br>
+    Phone No:<input name="phno" id="phno" value="{{ phno }}" readonly/><br>
+    Email: <input name="email" id="email" value="{{ email }}" readonly/><br>
+    Busid: <input name="busid" id="busid" value="{{ busid }}" readonly/><br>
+    Total Fare: <input name="total_fare" id="total_fare" value="{{ total_fare }}" readonly/><br>
+    Passengers: <input name="passengers" id="passengers" value="{{ passengers }}" readonly/>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+from flask import Flask, render_template, request, redirect, url_for
+import random
+from sqlQueries import *
+
+app = Flask(__name__)
+
+# ... (existing routes)
+
+# Update Page
+@app.route('/change/<id>')
+def change(id):
+    busd = booking_details(id)
+    if not busd:  # Change from `busd == []` to `not busd`
+        return render_template('404.html')
+    return render_template('change.html', busd=busd)
+
+# ... (existing routes)
+
+# Booking update page
+@app.route('/updatebook/<int:bookid>', methods=["GET", "POST"])
+def updatebook(bookid):
+    if request.method == "POST":
+        name = request.form['name']
+        phno = request.form['phno']
+        email = request.form['email']
+        passengers = request.form['passengers']
+
+        user_new_details = [name, phno, email]
+        booking_new_details = [passengers]
+        busd = booking_details(bookid)
+        busid = busd[0][2]
+        oldpassengers = book_passengers(bookid)
+        updatebookuser(user_new_details, booking_new_details, bookid)
+
+        new_passengers = int(passengers) - oldpassengers
+        print(new_passengers)
+        update_bus_passengers(busid, new_passengers)
+
+    return render_template("updated.html")
+
+# Process Payment route
+@app.route('/process_payment/<booking_id>/<total_fare>/<payment_status>', methods=["GET", "POST"])
+def process_payment(booking_id, total_fare, payment_status):
+    try:
+        # Assuming you have a MySQL connection object defined
+        # Replace 'your_mysql_connection' with the actual MySQL connection object
+        cursor = your_mysql_connection.cursor()
+        cursor.callproc('ProcessPayment', (booking_id, total_fare, payment_status))
+        your_mysql_connection.commit()
+        cursor.close()
+        return render_template('payment_processed.html')  # Replace with the appropriate template
+    except Exception as e:
+        print(str(e))
+        return render_template('payment_failed.html')  # Replace with the appropriate template
+    finally:
+        your_mysql_connection.close()  # Replace 'your_mysql_connection' with the actual MySQL connection object
+
+# ... (existing routes)
+
+if __name__ == '__main__':
+    app.run(debug=True)
